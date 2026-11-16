@@ -1,0 +1,14 @@
+[
+  {
+    "id": "usr-1792870921772",
+    "name": "Nishant Kumar",
+    "email": "akingnishant116@gmail.com",
+    "phone": "7055333390",
+    "passwordHash": "$2a$12$5PzIB0duPCSENIKkqa1XpOfhSbzIEDngwtAGteFn0Gm5Yn2Asl3.S",
+    "role": "CUSTOMER",
+    "status": "ACTIVE",
+    "languagePref": "en",
+    "officeId": null,
+    "createdAt": "2026-10-24T19:42:01.773Z"
+  }
+]

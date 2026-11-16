@@ -1,0 +1,481 @@
+// ============================================================
+// Lord of the Road — Database Schema
+// ============================================================
+// All models for Phases 1-7 are defined here so the full
+// database structure is visible in one place. Tables for later
+// phases will simply be empty until those features are built.
+// ============================================================
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ======================== ENUMS =============================
+
+enum Role {
+  SUPER_ADMIN
+  OFFICE_ADMIN
+  AGENT
+  CALLING_STAFF
+  HOTEL_SUPPLIER
+  BUS_OPERATOR
+  CAB_BIKE_OPERATOR
+  TRAVEL_SHOP_VENDOR
+  CUSTOMER
+}
+
+enum UserStatus {
+  ACTIVE
+  PENDING_APPROVAL
+  SUSPENDED
+}
+
+enum LeadSource {
+  WEBSITE
+  FACEBOOK
+  GOOGLE
+  JUSTDIAL
+  BOOKING_COM
+  MAKEMYTRIP
+  WHATSAPP
+  MANUAL
+  CSV_IMPORT
+  API_PARTNER
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUOTE_SENT
+  BOOKED
+  LOST
+}
+
+enum ServiceType {
+  HOLIDAY_PACKAGE
+  HOTEL
+  FLIGHT
+  BUS
+  TRAIN
+  CAB
+  TOUR_ACTIVITY
+  INSURANCE
+  TRAVEL_SHOP
+}
+
+enum PackageStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+}
+
+enum PayoutStatus {
+  PENDING
+  APPROVED
+  PROCESSED
+  REJECTED
+}
+
+enum PaymentStatus {
+  PENDING
+  PARTIAL
+  PAID
+  REFUNDED
+  FAILED
+}
+
+// ======================== USERS & AUTH =======================
+
+model User {
+  id            String     @id @default(cuid())
+  name          String
+  email         String     @unique
+  phone         String     @unique
+  passwordHash  String
+  role          Role       @default(CUSTOMER)
+  status        UserStatus @default(ACTIVE)
+  avatar        String?
+  languagePref  String     @default("en") // "en" | "hi"
+  lastLoginAt   DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  // Relations
+  agentProfile  AgentProfile?
+  officeId      String?
+  office        Office?       @relation(fields: [officeId], references: [id])
+  assignedLeads Lead[]        @relation("AgentLeads")
+  createdLeads  Lead[]        @relation("CreatorLeads")
+  leadNotes     LeadNote[]
+  packages      TourPackage[]
+  bookings      Booking[]
+  auditLogs     AuditLog[]
+
+  @@index([role])
+  @@index([status])
+}
+
+// ======================== OFFICES / BRANCHES ================
+
+model Office {
+  id       String  @id @default(cuid())
+  name     String                   // "Lord of the Road – Jaipur"
+  code     String  @unique          // "LOTR-JAI-01"
+  address  String
+  city     String
+  state    String
+  pinCodes String[]                 // Covered pin codes: ["302001","302002"]
+  phone    String?
+  email    String?
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users  User[]
+  agents AgentProfile[]
+  leads  Lead[]
+
+  @@index([city])
+  @@index([state])
+}
+
+// ======================== AGENT KYC & WALLET ================
+
+model AgentProfile {
+  id             String  @id @default(cuid())
+  userId         String  @unique
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  officeId       String?
+  office         Office? @relation(fields: [officeId], references: [id])
+  agencyName     String?
+  panNumber      String?
+  aadhaarNumber  String?
+  gstNumber      String?
+  bankAccountNo  String?
+  bankIfsc       String?
+  bankName       String?
+  upiId          String?
+  walletBalance  Decimal @default(0) @db.Decimal(12, 2)
+  totalEarned    Decimal @default(0) @db.Decimal(12, 2)
+  totalPaidOut   Decimal @default(0) @db.Decimal(12, 2)
+  kycVerified    Boolean @default(false)
+  coveragePinCodes String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  walletLedger   WalletLedger[]
+  payoutRequests PayoutRequest[]
+}
+
+// ======================== UNIFIED LEAD ======================
+
+model Lead {
+  id          String      @id @default(cuid())
+  leadNumber  String      @unique   // "LD-20261024-0001"
+  source      LeadSource  @default(WEBSITE)
+  serviceType ServiceType @default(HOLIDAY_PACKAGE)
+
+  // Customer info
+  name    String
+  phone   String
+  email   String?
+  pinCode String?        // Used for auto-routing to nearest office
+
+  // Trip details
+  destination     String?
+  travelDateStart DateTime?
+  travelDateEnd   DateTime?
+  paxAdults       Int      @default(1)
+  paxChildren     Int      @default(0)
+  budgetMin       Decimal? @db.Decimal(12, 2)
+  budgetMax       Decimal? @db.Decimal(12, 2)
+  message         String?  @db.Text
+
+  // Pipeline
+  status       LeadStatus @default(NEW)
+  followUpDate DateTime?
+  lostReason   String?
+
+  // Assignment
+  officeId        String?
+  office          Office? @relation(fields: [officeId], references: [id])
+  assignedAgentId String?
+  assignedAgent   User?   @relation("AgentLeads", fields: [assignedAgentId], references: [id])
+  createdById     String?
+  createdBy       User?   @relation("CreatorLeads", fields: [createdById], references: [id])
+
+  // Integration metadata
+  rawPayload Json?    // Full webhook payload for debugging
+  externalId String?  // ID from the source platform
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes   LeadNote[]
+  booking Booking?
+
+  @@index([phone])
+  @@index([email])
+  @@index([pinCode])
+  @@index([status])
+  @@index([source])
+  @@index([assignedAgentId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model LeadNote {
+  id       String @id @default(cuid())
+  leadId   String
+  lead     Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+  content  String @db.Text
+
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+}
+
+// ======================== TOUR PACKAGES =====================
+
+model TourPackage {
+  id             String        @id @default(cuid())
+  title          String
+  titleHi        String?
+  slug           String        @unique
+  destination    String
+  durationDays   Int
+  durationNights Int
+  pricePerPerson Decimal       @db.Decimal(12, 2)
+  discountPrice  Decimal?      @db.Decimal(12, 2)
+  description    String        @db.Text
+  descriptionHi  String?       @db.Text
+  itinerary      Json          // [{day:1, title:"...", details:"..."}]
+  inclusions     String[]
+  exclusions     String[]
+  coverImage     String?
+  galleryImages  String[]
+  status         PackageStatus @default(DRAFT)
+  isFeatured     Boolean       @default(false)
+  rejectionNote  String?
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@index([status])
+  @@index([destination])
+}
+
+// ======================== BOOKINGS ==========================
+
+model Booking {
+  id            String        @id @default(cuid())
+  bookingNumber String        @unique // "LOTR-BK-20261024-001"
+  leadId        String?       @unique
+  lead          Lead?         @relation(fields: [leadId], references: [id])
+  packageId     String?
+  package       TourPackage?  @relation(fields: [packageId], references: [id])
+  customerId    String?
+  customer      User?         @relation(fields: [customerId], references: [id])
+  serviceType   ServiceType   @default(HOLIDAY_PACKAGE)
+  totalAmount   Decimal       @db.Decimal(12, 2)
+  paidAmount    Decimal       @default(0) @db.Decimal(12, 2)
+  paymentStatus PaymentStatus @default(PENDING)
+
+  // Razorpay
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+
+  // Invoice
+  invoiceNumber String?
+  invoiceUrl    String?
+
+  // Commission
+  commissionPercent  Decimal? @db.Decimal(5, 2)
+  commissionAmount   Decimal  @default(0) @db.Decimal(12, 2)
+  commissionCredited Boolean  @default(false)
+
+  travelDate DateTime?
+  notes      String?   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([paymentStatus])
+  @@index([customerId])
+}
+
+// ======================== COMMISSION WALLET ==================
+
+model WalletLedger {
+  id           String       @id @default(cuid())
+  agentId      String
+  agent        AgentProfile @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  type         String       // "CREDIT_COMMISSION" | "DEBIT_PAYOUT" | "ADJUSTMENT"
+  amount       Decimal      @db.Decimal(12, 2)
+  balanceAfter Decimal      @db.Decimal(12, 2)
+  description  String
+  referenceId  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([agentId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model PayoutRequest {
+  id             String       @id @default(cuid())
+  agentId        String
+  agent          AgentProfile @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  amount         Decimal      @db.Decimal(12, 2)
+  status         PayoutStatus @default(PENDING)
+  adminRemarks   String?
+  transactionRef String?
+
+  requestedAt DateTime  @default(now())
+  processedAt DateTime?
+
+  @@index([agentId])
+  @@index([status])
+}
+
+// ======================== COMMISSION RULES ===================
+
+model CommissionRule {
+  id          String      @id @default(cuid())
+  serviceType ServiceType @unique
+  percentage  Decimal     @db.Decimal(5, 2)
+  flatAmount  Decimal?    @db.Decimal(12, 2)
+  isActive    Boolean     @default(true)
+  updatedAt   DateTime    @updatedAt
+}
+
+// ======================== INTEGRATIONS =======================
+
+model IntegrationConfig {
+  id               String  @id @default(cuid())
+  platform         String  @unique // "FACEBOOK","GOOGLE","JUSTDIAL","RAZORPAY"
+  isEnabled        Boolean @default(false)
+  apiKey           String?
+  apiSecret        String?
+  webhookSecret    String?
+  additionalConfig Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WebhookLog {
+  id           String  @id @default(cuid())
+  platform     String
+  endpoint     String
+  method       String  @default("POST")
+  headers      Json?
+  payload      Json
+  ipAddress    String?
+  status       String  // "SUCCESS" | "FAILED" | "DUPLICATE_IGNORED" | "SIGNATURE_INVALID"
+  leadId       String?
+  errorMessage String?
+  processedIn  Int?    // milliseconds
+
+  createdAt DateTime @default(now())
+
+  @@index([platform])
+  @@index([createdAt(sort: Desc)])
+}
+
+// ======================== INSURANCE (Phase 6) ================
+
+model InsuranceEnquiry {
+  id            String   @id @default(cuid())
+  customerName  String
+  customerPhone String
+  customerEmail String?
+  travelDest    String?
+  travelStart   DateTime?
+  travelEnd     DateTime?
+  paxCount      Int      @default(1)
+  coverType     String?  // "Basic" | "Comprehensive" | "Senior Citizen"
+  quoteAmount   Decimal? @db.Decimal(12, 2)
+  partnerRef    String?
+  status        String   @default("ENQUIRY") // ENQUIRY | QUOTED | REFERRED | ISSUED
+  notes         String?  @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ======================== TRAVEL SHOP (Phase 6) ==============
+
+model ShopProduct {
+  id          String  @id @default(cuid())
+  name        String
+  nameHi      String?
+  description String? @db.Text
+  price       Decimal @db.Decimal(12, 2)
+  imageUrl    String?
+  category    String? // "Luggage" | "Accessories" | "Travel Kit"
+  inStock     Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderItems ShopOrderItem[]
+}
+
+model ShopOrder {
+  id            String @id @default(cuid())
+  orderNumber   String @unique
+  customerName  String
+  customerPhone String
+  totalAmount   Decimal @db.Decimal(12, 2)
+  status        String  @default("PENDING") // PENDING | CONFIRMED | SHIPPED | DELIVERED
+  address       String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items ShopOrderItem[]
+}
+
+model ShopOrderItem {
+  id        String      @id @default(cuid())
+  orderId   String
+  order     ShopOrder   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   ShopProduct @relation(fields: [productId], references: [id])
+  quantity  Int         @default(1)
+  price     Decimal     @db.Decimal(12, 2)
+}
+
+// ======================== AUDIT LOG =========================
+
+model AuditLog {
+  id        String  @id @default(cuid())
+  userId    String?
+  user      User?   @relation(fields: [userId], references: [id])
+  action    String  // "LOGIN" | "LEAD_CREATED" | "STATUS_CHANGED" etc.
+  entity    String? // "Lead" | "User" | "Booking"
+  entityId  String?
+  details   String? @db.Text
+  ipAddress String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt(sort: Desc)])
+}
