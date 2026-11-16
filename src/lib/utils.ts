@@ -17,7 +17,8 @@ export function cn(...classes: (string | undefined | false | null)[]): string {
  * CUSTOMER -> '/customer'
  * Default -> '/'
  */
-export function getDashboardPath(role: string): string {
+export function getDashboardPath(role?: string): string {
+  if (!role) return "/customer";
   switch (role) {
     case "SUPER_ADMIN":
       return "/admin";
@@ -34,7 +35,32 @@ export function getDashboardPath(role: string): string {
     case "CUSTOMER":
       return "/customer";
     default:
-      return "/";
+      return "/customer";
+  }
+}
+
+/**
+ * Returns a user-friendly label for a role's dashboard.
+ */
+export function getDashboardLabel(role?: string): string {
+  if (!role) return "Dashboard";
+  switch (role) {
+    case "SUPER_ADMIN":
+      return "Admin Desk";
+    case "OFFICE_ADMIN":
+      return "Office Desk";
+    case "AGENT":
+    case "CALLING_STAFF":
+      return "Agent Portal";
+    case "HOTEL_SUPPLIER":
+    case "BUS_OPERATOR":
+    case "CAB_BIKE_OPERATOR":
+    case "TRAVEL_SHOP_VENDOR":
+      return "Partner Hub";
+    case "CUSTOMER":
+      return "My Dashboard";
+    default:
+      return "Dashboard";
   }
 }
 

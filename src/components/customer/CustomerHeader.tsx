@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { getDashboardPath, getDashboardLabel } from "@/lib/utils";
 
 export function CustomerHeader() {
   const pathname = usePathname();
@@ -254,22 +255,14 @@ export function CustomerHeader() {
                 </span>
                 <span className="max-w-[90px] truncate text-[#242A28]">{session.user.name || "Account"}</span>
               </Link>
-              {userRole === "AGENT" && (
-                <Link
-                  href="/agent/dashboard"
-                  className="px-2.5 py-1 bg-[#287C70] text-white text-[11px] font-semibold rounded-md"
-                >
-                  Agent Desk
-                </Link>
-              )}
-              {userRole === "SUPER_ADMIN" && (
-                <Link
-                  href="/admin/dashboard"
-                  className="px-2.5 py-1 bg-[#173D32] text-[#B7955B] text-[11px] font-semibold rounded-md"
-                >
-                  Admin Desk
-                </Link>
-              )}
+              <Link
+                href={getDashboardPath(userRole)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#173D32] hover:bg-[#287C70] text-[#B7955B] hover:text-white text-xs font-semibold rounded-lg shadow-sm transition border border-[#C5A66A]/40"
+                title="Go to Dashboard"
+              >
+                <span>📊</span>
+                <span>{getDashboardLabel(userRole)}</span>
+              </Link>
               <button
                 type="button"
                 onClick={() => signOut({ callbackUrl: "/" })}
@@ -319,6 +312,27 @@ export function CustomerHeader() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[#E7E6E0] bg-[#FAF8F4] px-4 pt-3 pb-6 space-y-3 animate-fadeIn">
+          {session?.user && (
+            <Link
+              href={getDashboardPath(userRole)}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl bg-[#173D32] text-white font-medium border border-[#C5A66A]/40 shadow-sm"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl">📊</span>
+                <div className="text-left">
+                  <div className="text-[10px] text-[#B7955B] font-bold uppercase tracking-wider">
+                    {session.user.name || "Signed in"}
+                  </div>
+                  <div className="text-sm font-semibold">{getDashboardLabel(userRole)} (वापस डैशबोर्ड)</div>
+                </div>
+              </div>
+              <span className="text-xs bg-[#B7955B] text-[#173D32] font-bold px-2.5 py-1 rounded-full">
+                Go ➔
+              </span>
+            </Link>
+          )}
+
           <Link
             href="/travel-agent"
             onClick={() => setMobileMenuOpen(false)}

@@ -3,9 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { getDashboardPath } from "@/lib/utils";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const userRole = (session?.user as { role?: string })?.role;
+  const dashboardPath = getDashboardPath(userRole);
   const [savedCount, setSavedCount] = useState(0);
 
   useEffect(() => {
@@ -122,6 +127,27 @@ export function MobileBottomNav() {
           <span className="text-lg">🎒</span>
           <span>My Trips</span>
         </Link>
+
+        {/* Dashboard / Sign In */}
+        {session?.user ? (
+          <Link
+            href={dashboardPath}
+            className={`flex flex-col items-center gap-0.5 text-[10px] font-semibold transition ${
+              pathname.startsWith(dashboardPath) ? "text-[#B7955B]" : "text-[#173D32] hover:text-[#B7955B]"
+            }`}
+          >
+            <span className="text-lg">📊</span>
+            <span>Dashboard</span>
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            className="flex flex-col items-center gap-0.5 text-[10px] font-semibold text-[#737B76] hover:text-[#173B32] transition"
+          >
+            <span className="text-lg">👤</span>
+            <span>Sign In</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
