@@ -16,7 +16,7 @@ interface TravellerProfile {
   phone: string;
 }
 
-const DEFAULT_CUSTOMER_BOOKINGS: BookingRecord[] = [
+const DEFAULT_CUSTOMER_BOOKINGS: any[] = [
   {
     id: "bk-cust-1",
     bookingNumber: "LOTR-884210",

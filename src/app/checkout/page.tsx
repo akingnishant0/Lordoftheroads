@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+export const dynamic = "force-dynamic";
+
+import React, { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { CustomerHeader } from "@/components/customer/CustomerHeader";
 import { CustomerFooter } from "@/components/customer/CustomerFooter";
 
-export default function CheckoutPage() {
+function CheckoutPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session } = useSession();
@@ -383,5 +385,14 @@ export default function CheckoutPage() {
 
       <CustomerFooter />
     </div>
+  );
+}
+
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-8 text-[#173B32]">Loading...</div>}>
+      <CheckoutPageContent />
+    </Suspense>
   );
 }

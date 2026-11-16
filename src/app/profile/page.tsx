@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { CustomerHeader } from "@/components/customer/CustomerHeader";
 import { CustomerFooter } from "@/components/customer/CustomerFooter";
+import Link from "next/link";
+import { getDashboardPath, getDashboardLabel } from "@/lib/utils";
 
 export default function CustomerProfilePage() {
   const { data: session } = useSession();
@@ -22,12 +24,38 @@ export default function CustomerProfilePage() {
     setTimeout(() => setSavedSuccess(false), 3000);
   };
 
+  const userRole = (session?.user as { role?: string })?.role;
+  const dashboardPath = getDashboardPath(userRole);
+  const dashboardLabel = getDashboardLabel(userRole);
+
   return (
     <div className="min-h-screen bg-[#FAF8F4] text-[#242A28] flex flex-col">
       <CustomerHeader />
 
-      <main className="flex-grow py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto space-y-8">
+      <main className="flex-grow py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Top Breadcrumb & Return to Dashboard Bar */}
+          <div className="flex items-center justify-between pb-3 border-b border-[#E7E6E0]">
+            <div className="flex items-center gap-2 text-xs text-[#737B76]">
+              <Link
+                href={dashboardPath}
+                className="hover:text-[#173D32] flex items-center gap-1 font-semibold transition"
+              >
+                <span>📊</span>
+                <span>{dashboardLabel}</span>
+              </Link>
+              <span>/</span>
+              <span className="text-[#173D32] font-medium">Profile Settings</span>
+            </div>
+
+            <Link
+              href={dashboardPath}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#173D32] hover:bg-[#287C70] text-[#FAF8F4] text-xs font-semibold shadow-xs transition"
+            >
+              <span>← Back to Dashboard (डैशबोर्ड)</span>
+            </Link>
+          </div>
+
           <div>
             <span className="text-xs uppercase font-bold tracking-widest text-[#B7955B]">
               Traveller Identity & Settings

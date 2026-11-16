@@ -60,22 +60,26 @@ export default function AdminPackagesPage() {
       );
       showToast(`✓ Updated "${title}" successfully!`);
     } else {
-      const newPkg: HolidayPackage = {
+      const newPkg: any = {
         id: `pkg-${Date.now()}`,
         title,
         slug: title.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
         destination,
+        country: "India",
+        category: "Mountain",
         durationDays: Number(durationDays),
         durationNights: Number(durationNights),
         pricePerPerson: Number(pricePerPerson),
+        originalPrice: Number(pricePerPerson) * 1.25,
+        departureCities: ["Delhi", "Chandigarh", "Jaipur"],
         rating: 4.9,
         reviewsCount: 1,
         imageUrl: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800",
         highlights: ["Daily Buffet Breakfast", "Dedicated AC Chauffeur", "Handpicked Heritage Stays"],
         inclusions: ["Accommodation", "Transfers", "Sightseeing", "Meals"],
         itinerary: [
-          { day: 1, title: "Arrival & Check-in", description: "Private airport/railway pickup and check-in." },
-          { day: 2, title: "Scenic Exploration", description: "Guided sightseeing and immersion experiences." },
+          { day: 1, title: "Arrival & Check-in", details: "Private airport/railway pickup and check-in." },
+          { day: 2, title: "Scenic Exploration", details: "Guided sightseeing and immersion experiences." },
         ],
       };
       setPackages([newPkg, ...packages]);

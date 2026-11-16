@@ -2,8 +2,10 @@
 
 import React, { useState, use } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { CustomerHeader } from "@/components/customer/CustomerHeader";
 import { CustomerFooter } from "@/components/customer/CustomerFooter";
+import { getDashboardPath, getDashboardLabel } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ bookingId: string }>;
@@ -12,6 +14,10 @@ interface PageProps {
 export default function TripDetailPage({ params }: PageProps) {
   const resolvedParams = use(params);
   const bookingId = resolvedParams.bookingId;
+  const { data: session } = useSession();
+  const userRole = (session?.user as { role?: string })?.role;
+  const dashboardPath = getDashboardPath(userRole);
+  const dashboardLabel = getDashboardLabel(userRole);
 
   const [cancellationRequested, setCancellationRequested] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -20,17 +26,35 @@ export default function TripDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-[#FAF8F4] text-[#242A28] flex flex-col">
       <CustomerHeader />
 
-      <main className="flex-grow py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="flex items-center justify-between">
-            <Link href="/my-trips" className="text-xs font-semibold text-[#173D32] hover:underline">
-              ← Back to My Trips
-            </Link>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold text-[#737B76]">Booking: {bookingId}</span>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
-                {cancellationRequested ? "CANCELLATION IN REVIEW" : "CONFIRMED & ACTIVE"}
-              </span>
+      <main className="flex-grow py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E7E6E0]">
+            <div className="flex items-center gap-3">
+              <Link
+                href={dashboardPath}
+                className="text-xs font-semibold text-[#173D32] hover:underline flex items-center gap-1"
+              >
+                <span>📊</span>
+                <span>{dashboardLabel}</span>
+              </Link>
+              <span className="text-xs text-[#737B76]">/</span>
+              <Link href="/my-trips" className="text-xs font-semibold text-[#737B76] hover:text-[#173D32]">
+                My Trips
+              </Link>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link
+                href={dashboardPath}
+                className="px-3 py-1 rounded-lg bg-[#173D32] hover:bg-[#287C70] text-[#FAF8F4] text-xs font-semibold transition"
+              >
+                ← Back to Dashboard
+              </Link>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono font-bold text-[#737B76]">Booking: {bookingId}</span>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+                  {cancellationRequested ? "CANCELLATION IN REVIEW" : "CONFIRMED & ACTIVE"}
+                </span>
+              </div>
             </div>
           </div>
 

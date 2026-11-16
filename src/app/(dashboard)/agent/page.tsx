@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+export const dynamic = "force-dynamic";
+
+import React, { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -8,23 +10,13 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { InsurerQuote, IssuedPolicyRecord } from "@/services/insuranceEngineService";
 import { AgentTravelBookingRecord } from "@/services/agentBookingService";
 
-export default function AgentPartnerHubPage() {
+function AgentPartnerHubPageContent() {
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab") || "overview";
 
-  const [activeTab, setActiveTab] = useState<
-    "overview" | "travel-desk" | "insurance-desk" | "wallet" | "posp"
-  >(
-    initialTab === "insurance-desk"
-      ? "insurance-desk"
-      : initialTab === "travel-desk"
-      ? "travel-desk"
-      : initialTab === "wallet"
-      ? "wallet"
-      : initialTab === "posp"
-      ? "posp"
-      : "overview"
+  const [activeTab, setActiveTab] = useState<string>(
+    initialTab || "overview"
   );
 
   // Sync tab with URL search parameter if changed
@@ -1350,5 +1342,14 @@ export default function AgentPartnerHubPage() {
         </div>
       )}
 </div>
+  );
+}
+
+
+export default function AgentPartnerHubPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-8 text-[#173B32]">Loading...</div>}>
+      <AgentPartnerHubPageContent />
+    </Suspense>
   );
 }

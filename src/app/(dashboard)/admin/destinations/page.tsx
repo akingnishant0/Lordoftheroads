@@ -44,21 +44,30 @@ export default function AdminDestinationsPage() {
       setDestinations((prev) =>
         prev.map((item) =>
           item.id === editingDestination.id
-            ? { ...item, name, tagline, category, startingPrice: Number(startingPrice), imageUrl }
+            ? { ...item, name, tagline, category: category as any, startingPrice: Number(startingPrice), imageUrl }
             : item
         )
       );
       showToast(`✓ Updated "${name}" successfully!`);
     } else {
-      const newDest: DestinationItem = {
+      const newDest: any = {
         id: `dest-${Date.now()}`,
         name,
         slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
         tagline,
+        country: "India",
+        region: "North India",
+        isInternational: false,
+        duration: "5 Days / 4 Nights",
+        reviewsCount: 120,
+        overview: tagline,
+        highlights: ["Scenic Landscapes", "Local Cuisine", "Verified Stay"],
+        itinerarySummary: [{ day: 1, title: "Arrival", desc: "Check-in and explore" }],
+        recommendedStay: "Heritage Homestay",
         startingPrice: Number(startingPrice),
         imageUrl: imageUrl || "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800",
         rating: 4.9,
-        category,
+        category: category as any,
         bestTimeToVisit: "Oct - Apr",
       };
       setDestinations([newDest, ...destinations]);

@@ -191,11 +191,11 @@ export function AiTravelAgentModal({ onOpenBookingFlow }: AiTravelAgentModalProp
           <h3 style="font-family: Georgia, serif;">Day-Wise Route & Schedule</h3>
           ${plan.itinerary.map(d => `
             <div class="day-card">
-              <div class="day-title">Day ${d.day}: ${d.title} (${d.distance})</div>
+              <div class="day-title">Day ${d.day}: ${d.title}${((d as any).distance) ? ' (' + (d as any).distance + ')' : ''}</div>
               <p style="font-size: 13px; margin: 4px 0;"><b>Morning:</b> ${d.morning}</p>
               <p style="font-size: 13px; margin: 4px 0;"><b>Afternoon:</b> ${d.afternoon}</p>
               <p style="font-size: 13px; margin: 4px 0;"><b>Evening:</b> ${d.evening}</p>
-              <p style="font-size: 13px; margin: 6px 0 0; color: #287C70;"><b>Stay:</b> ${d.stayRecommendation} | <b>Dining:</b> ${d.foodRecommendation}</p>
+              <p style="font-size: 13px; margin: 6px 0 0; color: #287C70;"><b>Stay:</b> ${(d as any).stayRecommendation || 'Heritage Stay'} | <b>Dining:</b> ${(d as any).foodRecommendation || (d as any).mealRecommendation || 'Local Specialities'}</p>
             </div>
           `).join("")}
           <h3 style="font-family: Georgia, serif; margin-top: 24px;">Estimated Budget Breakdown (Per Person)</h3>
