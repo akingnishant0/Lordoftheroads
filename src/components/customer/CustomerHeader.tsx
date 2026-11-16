@@ -79,22 +79,22 @@ export function CustomerHeader() {
   return (
     <header className="sticky top-0 z-50 bg-[#FAF8F4]/95 backdrop-blur-md border-b border-[#E7E6E0] transition-colors">
       {/* Top Announcement Bar */}
-      <div className="bg-[#173D32] text-[#FAF8F4] px-4 py-1.5 text-xs font-medium flex items-center justify-between">
+      <div className="bg-gradient-to-r from-[#1F0605] via-[#BA1E04] to-[#CD2306] text-[#FAF8F5] px-4 py-1.5 text-xs font-medium flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#B7955B] animate-pulse"></span>
+          <span className="w-2 h-2 rounded-full bg-[#EE6C19] animate-pulse"></span>
           <span>
             {language === "hi"
               ? "भारत एवं विदेश यात्राएं • 100% सत्यापित दरें एवं Airbnb-Style Stays"
               : "Curated India & Global Journeys • Live Real-time Rates & Stays"}
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[11px] text-[#EDE5D8]">
+        <div className="flex items-center gap-4 text-[11px] text-[#FED7AA]">
           <Link href="/support" className="hover:text-white transition">24/7 Concierge Support</Link>
           <span className="opacity-40">|</span>
           <button
             type="button"
             onClick={() => setLanguage(language === "en" ? "hi" : "en")}
-            className="hover:text-[#B7955B] font-semibold flex items-center gap-1 cursor-pointer"
+            className="hover:text-[#FBF774] font-semibold flex items-center gap-1 cursor-pointer"
           >
             🌐 {language === "en" ? "हिन्दी" : "English"}
           </button>
@@ -105,14 +105,14 @@ export function CustomerHeader() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group shrink-0">
-          <div className="relative w-11 h-11 rounded-2xl overflow-hidden border-2 border-[#B7955B]/50 shadow-sm group-hover:scale-105 transition-transform bg-black shrink-0">
+          <div className="relative w-11 h-11 rounded-2xl overflow-hidden border-2 border-[#EE6C19] shadow-sm group-hover:scale-105 transition-transform bg-black shrink-0">
             <img src="/logo.jpg" alt="Lord of the Roads" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-xl font-bold text-[#173D32] tracking-tight leading-tight">
-              lord <i className="font-normal font-serif text-[#B7955B]">of the</i> road
+            <span className="font-serif text-xl font-bold text-[#1F0605] tracking-tight leading-tight">
+              lord <i className="font-normal font-serif text-[#EE6C19]">of the</i> <span className="text-[#BA1E04]">road</span>
             </span>
-            <span className="text-[9px] uppercase tracking-widest text-[#737B76] font-semibold">
+            <span className="text-[9px] uppercase tracking-widest text-[#BA1E04] font-bold">
               Travel Booking Platform
             </span>
           </div>
@@ -257,7 +257,7 @@ export function CustomerHeader() {
               </Link>
               <Link
                 href={getDashboardPath(userRole)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#173D32] hover:bg-[#287C70] text-[#B7955B] hover:text-white text-xs font-semibold rounded-lg shadow-sm transition border border-[#C5A66A]/40"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#BA1E04] to-[#CD2306] hover:from-[#9E1803] hover:to-[#B7240C] text-white text-xs font-semibold rounded-lg shadow-sm transition border border-[#EE6C19]/40"
                 title="Go to Dashboard"
               >
                 <span>📊</span>
@@ -266,7 +266,7 @@ export function CustomerHeader() {
               <button
                 type="button"
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="p-1.5 text-[#737B76] hover:text-red-600 rounded-md transition"
+                className="p-1.5 text-[#737B76] hover:text-[#BA1E04] rounded-md transition"
                 title="Sign out"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,13 +278,13 @@ export function CustomerHeader() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 text-xs font-semibold text-[#173D32] hover:text-[#287C70] transition"
+                className="px-3.5 py-1.5 text-xs font-semibold text-[#1F0605] hover:text-[#BA1E04] transition"
               >
                 Sign In
               </Link>
               <Link
                 href="/register"
-                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-[#173D32] text-white hover:bg-[#287C70] transition shadow-sm"
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-[#BA1E04] to-[#EE6C19] text-white hover:opacity-90 transition shadow-sm"
               >
                 Register
               </Link>
@@ -316,18 +316,18 @@ export function CustomerHeader() {
             <Link
               href={getDashboardPath(userRole)}
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl bg-[#173D32] text-white font-medium border border-[#C5A66A]/40 shadow-sm"
+              className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-[#1F0605] via-[#BA1E04] to-[#CD2306] text-white font-medium border border-[#EE6C19]/40 shadow-sm"
             >
               <div className="flex items-center gap-2.5">
                 <span className="text-xl">📊</span>
                 <div className="text-left">
-                  <div className="text-[10px] text-[#B7955B] font-bold uppercase tracking-wider">
+                  <div className="text-[10px] text-[#FBF774] font-bold uppercase tracking-wider">
                     {session.user.name || "Signed in"}
                   </div>
                   <div className="text-sm font-semibold">{getDashboardLabel(userRole)} (वापस डैशबोर्ड)</div>
                 </div>
               </div>
-              <span className="text-xs bg-[#B7955B] text-[#173D32] font-bold px-2.5 py-1 rounded-full">
+              <span className="text-xs bg-[#EE6C19] text-white font-bold px-2.5 py-1 rounded-full">
                 Go ➔
               </span>
             </Link>
@@ -336,13 +336,13 @@ export function CustomerHeader() {
           <Link
             href="/travel-agent"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-between p-3 rounded-xl bg-[#173D32] text-white font-medium"
+            className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-[#BA1E04] to-[#EE6C19] text-white font-medium"
           >
             <span className="flex items-center gap-2">
               <span>🤖</span>
               <span>AI Travel Agent Concierge</span>
             </span>
-            <span className="text-xs bg-[#B7955B] text-[#173D32] font-bold px-2 py-0.5 rounded-full">New</span>
+            <span className="text-xs bg-[#FBF774] text-[#1F0605] font-bold px-2 py-0.5 rounded-full">New</span>
           </Link>
 
           <div className="grid grid-cols-2 gap-2 pt-2">

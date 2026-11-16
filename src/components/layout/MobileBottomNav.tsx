@@ -94,22 +94,22 @@ export function MobileBottomNav() {
           className="flex flex-col items-center -mt-5 group"
           title="Open AI Travel Planner"
         >
-          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#173B32] via-[#287C70] to-[#B7955B] text-white flex items-center justify-center shadow-lg group-active:scale-95 transition-transform border-2 border-white">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#1F0605] via-[#BA1E04] to-[#EE6C19] text-white flex items-center justify-center shadow-lg group-active:scale-95 transition-transform border-2 border-white">
             <span className="text-xl">✨</span>
           </div>
-          <span className="text-[10px] font-bold text-[#173B32] mt-0.5">AI Planner</span>
+          <span className="text-[10px] font-bold text-[#BA1E04] mt-0.5">AI Planner</span>
         </button>
 
         {/* Wishlist / Saved */}
         <button
           type="button"
           onClick={handleOpenWishlist}
-          className="relative flex flex-col items-center gap-0.5 text-[10px] font-semibold text-[#737B76] hover:text-[#173B32] transition"
+          className="relative flex flex-col items-center gap-0.5 text-[10px] font-semibold text-[#737B76] hover:text-[#BA1E04] transition"
         >
           <div className="relative">
             <span className="text-lg">❤️</span>
             {savedCount > 0 && (
-              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#B7955B] text-white text-[9px] font-bold flex items-center justify-center shadow-xs">
+              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#EE6C19] text-white text-[9px] font-bold flex items-center justify-center shadow-xs">
                 {savedCount}
               </span>
             )}
@@ -121,7 +121,7 @@ export function MobileBottomNav() {
         <Link
           href="/my-trips"
           className={`flex flex-col items-center gap-0.5 text-[10px] font-semibold transition ${
-            pathname.startsWith("/my-trips") ? "text-[#173B32]" : "text-[#737B76] hover:text-[#173B32]"
+            pathname.startsWith("/my-trips") ? "text-[#BA1E04]" : "text-[#737B76] hover:text-[#BA1E04]"
           }`}
         >
           <span className="text-lg">🎒</span>
@@ -133,7 +133,7 @@ export function MobileBottomNav() {
           <Link
             href={dashboardPath}
             className={`flex flex-col items-center gap-0.5 text-[10px] font-semibold transition ${
-              pathname.startsWith(dashboardPath) ? "text-[#B7955B]" : "text-[#173D32] hover:text-[#B7955B]"
+              pathname.startsWith(dashboardPath) ? "text-[#EE6C19]" : "text-[#1F0605] hover:text-[#EE6C19]"
             }`}
           >
             <span className="text-lg">📊</span>
@@ -142,7 +142,7 @@ export function MobileBottomNav() {
         ) : (
           <Link
             href="/login"
-            className="flex flex-col items-center gap-0.5 text-[10px] font-semibold text-[#737B76] hover:text-[#173B32] transition"
+            className="flex flex-col items-center gap-0.5 text-[10px] font-semibold text-[#737B76] hover:text-[#BA1E04] transition"
           >
             <span className="text-lg">👤</span>
             <span>Sign In</span>

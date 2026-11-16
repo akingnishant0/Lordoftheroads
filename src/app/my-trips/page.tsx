@@ -75,28 +75,28 @@ export default function MyTripsPage() {
             <div className="flex items-center gap-2 text-xs text-[#737B76]">
               <Link
                 href={dashboardPath}
-                className="hover:text-[#173D32] flex items-center gap-1 font-semibold transition"
+                className="hover:text-[#BA1E04] flex items-center gap-1 font-semibold transition"
               >
                 <span>📊</span>
                 <span>{dashboardLabel}</span>
               </Link>
               <span>/</span>
-              <span className="text-[#173D32] font-medium">My Bookings & Trips</span>
+              <span className="text-[#BA1E04] font-medium">My Bookings & Trips</span>
             </div>
 
             <Link
               href={dashboardPath}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#173D32] hover:bg-[#287C70] text-[#FAF8F4] text-xs font-semibold shadow-xs transition"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#BA1E04] to-[#CD2306] hover:from-[#9E1803] hover:to-[#B7240C] text-white text-xs font-semibold shadow-xs transition border border-[#EE6C19]/40"
             >
               <span>← Back to Dashboard (डैशबोर्ड)</span>
             </Link>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span className="text-xs uppercase font-bold tracking-widest text-[#B7955B]">
+              <span className="text-xs uppercase font-bold tracking-widest text-[#EE6C19]">
                 Customer Itinerary Desk
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#173D32] mt-1">
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#1F0605] mt-1">
                 My Bookings & Trips
               </h1>
               <p className="text-xs text-[#737B76]">
@@ -106,7 +106,7 @@ export default function MyTripsPage() {
 
             <Link
               href="/holiday-packages"
-              className="px-4 py-2.5 rounded-xl bg-[#173D32] hover:bg-[#287C70] text-white text-xs font-semibold transition self-start sm:self-auto"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#BA1E04] to-[#EE6C19] hover:opacity-90 text-white text-xs font-semibold transition self-start sm:self-auto shadow-xs"
             >
               + Plan New Journey
             </Link>
@@ -121,8 +121,8 @@ export default function MyTripsPage() {
                 onClick={() => setFilter(tab)}
                 className={`px-4 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer ${
                   filter === tab
-                    ? "bg-[#173D32] text-white"
-                    : "bg-white border border-[#E7E6E0] text-[#737B76] hover:text-[#242A28]"
+                    ? "bg-[#BA1E04] text-white"
+                    : "bg-white border border-[#E7E6E0] text-[#737B76] hover:text-[#BA1E04]"
                 }`}
               >
                 {tab === "ALL" ? "All Bookings" : tab}

@@ -226,14 +226,14 @@ function RegisterPageContent() {
       <header className="sticky top-0 z-40 bg-[#FAF8F4]/90 backdrop-blur-md border-b border-[#E7E2D6] px-4 sm:px-8 py-3.5 transition-all">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl overflow-hidden border border-[#C5A66A]/60 shadow-xs bg-[#173B32] flex items-center justify-center p-1 group-hover:scale-105 transition-transform">
-              <img src="/logo.jpg" alt="Lord of the Road" className="w-full h-full object-cover rounded-lg" />
+            <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-[#EE6C19] shadow-sm bg-black flex items-center justify-center group-hover:scale-105 transition-transform">
+              <img src="/logo.jpg" alt="Lord of the Road" className="w-full h-full object-cover" />
             </div>
             <div>
-              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#173B32] leading-none block">
-                lord <span className="font-normal italic text-[#C5A66A]">of the</span> road
+              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#1F0605] leading-none block">
+                lord <span className="font-normal italic text-[#EE6C19]">of the</span> road
               </span>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-[#8B6E32] font-semibold block mt-0.5">
+              <span className="text-[9px] uppercase tracking-[0.2em] text-[#BA1E04] font-semibold block mt-0.5">
                 Pan-India Travel Ecosystem
               </span>
             </div>
@@ -245,7 +245,7 @@ function RegisterPageContent() {
             </span>
             <Link
               href="/login"
-              className="px-4 py-2 rounded-xl border border-[#173B32] text-[#173B32] hover:bg-[#173B32] hover:text-[#F7F4EC] text-xs font-bold transition-all shadow-2xs"
+              className="px-4 py-2 rounded-xl border border-[#BA1E04] text-[#BA1E04] hover:bg-[#BA1E04] hover:text-white text-xs font-bold transition-all shadow-2xs"
             >
               Sign In / लॉगिन ➔
             </Link>
@@ -257,16 +257,16 @@ function RegisterPageContent() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Editorial Heading Box */}
         <div className="relative mb-10 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#173B32]/5 border border-[#173B32]/15 text-[#173B32] text-xs font-semibold uppercase tracking-wider mb-3">
-            <span className="text-[#C5A66A]">✦</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF7ED] border border-[#FED7AA] text-[#BA1E04] text-xs font-semibold uppercase tracking-wider mb-3">
+            <span className="text-[#EE6C19]">✦</span>
             <span>Uniting India's Roads, Villages & Cities</span>
-            <span className="text-[#C5A66A]">✦</span>
+            <span className="text-[#EE6C19]">✦</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#173B32] tracking-tight leading-[1.15]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#1F0605] tracking-tight leading-[1.15]">
             Begin Your Journey Across India
           </h1>
-          <p className="font-serif italic text-lg sm:text-xl text-[#8B6E32] mt-1">
+          <p className="font-serif italic text-lg sm:text-xl text-[#BA1E04] mt-1">
             "रोड के किसी भी कोने तक कुछ छूटे नहीं"
           </p>
           <p className="mt-3 text-xs sm:text-sm text-[#5A6D63] max-w-2xl mx-auto leading-relaxed">
@@ -305,15 +305,15 @@ function RegisterPageContent() {
                     onClick={() => setSelectedCategory(opt.id)}
                     className={`w-full text-left p-4 rounded-2xl border-2 transition-all duration-200 relative group flex items-start gap-4 ${
                       isSelected
-                        ? "border-[#173B32] bg-[#FAF8F4] shadow-md ring-1 ring-[#173B32]/20"
-                        : "border-[#EFECE3] hover:border-[#C5A66A]/60 bg-white hover:bg-[#FAF8F4]/50"
+                        ? "border-[#BA1E04] bg-[#FFF7ED] shadow-md ring-1 ring-[#BA1E04]/30"
+                        : "border-[#EFECE3] hover:border-[#EE6C19]/60 bg-white hover:bg-[#FAF8F4]/50"
                     }`}
                   >
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 transition-transform group-hover:scale-105 shadow-2xs ${
                         isSelected
-                          ? "bg-[#173B32] text-white"
-                          : "bg-[#FAF8F4] border border-[#E7E2D6] text-[#173B32]"
+                          ? "bg-[#BA1E04] text-white"
+                          : "bg-[#FAF8F4] border border-[#E7E2D6] text-[#BA1E04]"
                       }`}
                     >
                       {opt.icon}
@@ -321,13 +321,13 @@ function RegisterPageContent() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
-                        <span className="font-serif font-bold text-sm text-[#173B32] group-hover:text-[#112B24] truncate">
+                        <span className="font-serif font-bold text-sm text-[#1F0605] group-hover:text-[#BA1E04] truncate">
                           {opt.title}
                         </span>
                         <span
                           className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0 ${
                             isSelected
-                              ? "bg-[#173B32] text-[#F7F4EC]"
+                              ? "bg-[#BA1E04] text-white"
                               : "bg-[#EFECE3] text-[#5A6D63]"
                           }`}
                         >
@@ -335,7 +335,7 @@ function RegisterPageContent() {
                         </span>
                       </div>
 
-                      <div className="text-xs text-[#8B6E32] font-semibold mt-0.5">
+                      <div className="text-xs text-[#EE6C19] font-semibold mt-0.5">
                         {opt.hindiTitle}
                       </div>
 
@@ -356,7 +356,7 @@ function RegisterPageContent() {
                       </div>
 
                       {isSelected && (
-                        <div className="mt-2.5 pt-2 border-t border-[#E7E2D6] flex items-center justify-between text-[11px] font-bold text-[#173B32]">
+                        <div className="mt-2.5 pt-2 border-t border-[#FED7AA] flex items-center justify-between text-[11px] font-bold text-[#BA1E04]">
                           <span>चयनित (Active Selection)</span>
                           <span>➔</span>
                         </div>
@@ -601,7 +601,7 @@ function RegisterPageContent() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 px-6 rounded-2xl bg-[#173B32] hover:bg-[#112B24] text-[#F7F4EC] font-serif font-bold text-sm sm:text-base tracking-wide shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-3 disabled:opacity-60 cursor-pointer group"
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-[#BA1E04] via-[#CD2306] to-[#EE6C19] hover:from-[#9E1803] hover:to-[#D95B0F] text-white font-serif font-bold text-sm sm:text-base tracking-wide shadow-lg shadow-red-950/20 hover:shadow-xl transition-all flex items-center justify-center gap-3 disabled:opacity-60 cursor-pointer group"
               >
                 {loading ? (
                   <>

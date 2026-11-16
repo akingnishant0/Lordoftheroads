@@ -400,7 +400,7 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
   return (
     <div className="w-full bg-[#FAF8F4] text-[#242A28]">
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative w-full bg-[#173B32] text-[#F7F4EC] pt-8 sm:pt-14 pb-14 sm:pb-20">
+      <section className="relative w-full bg-[#1F0605] text-[#F7F4EC] pt-8 sm:pt-14 pb-14 sm:pb-20">
         {/* Background Layer with Dark Artistic Tint (overflow-hidden scoped to image only) */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <img
@@ -408,25 +408,25 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
             alt="Cinematic Himalayan Ridge"
             className="w-full h-full object-cover object-center opacity-40 mix-blend-luminosity scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#173B32]/75 via-[#173B32]/50 to-[#173B32]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1F0605]/85 via-[#2A0804]/60 to-[#1F0605]" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
           {/* Top Tagline / Category Highlights */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF8F4]/10 backdrop-blur-md border border-[#FAF8F4]/20 text-[#FAF8F4] text-xs font-mono uppercase tracking-widest">
-            <span className="w-2 h-2 rounded-full bg-[#C5A66A] animate-ping" />
+            <span className="w-2 h-2 rounded-full bg-[#EE6C19] animate-ping" />
             <span>Don&apos;t Just Book a Trip. Live the Journey.</span>
           </div>
 
           {/* Hero Central Editorial Headline */}
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#C5A66A]">
+            <span className="text-xs uppercase font-bold tracking-[0.25em] text-[#EE6C19]">
               Lord of the Road · Curated Journeys
             </span>
             <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.12]">
-              Your Journey <i className="font-normal font-serif text-[#C5A66A]">Begins Here.</i>
+              Your Journey <i className="font-normal font-serif text-[#EE6C19]">Begins Here.</i>
             </h1>
-            <p className="text-xs sm:text-base text-[#EDE5D8] max-w-xl font-light leading-relaxed">
+            <p className="text-xs sm:text-base text-[#FED7AA] max-w-xl font-light leading-relaxed">
               Discover Airbnb-style mountain chalets, plan road adventures, and explore untouched India with your 24/7 personal AI travel companion.
             </p>
           </div>
@@ -506,7 +506,7 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
               <div className="sm:col-span-2 p-1">
                 <button
                   type="submit"
-                  className="w-full h-11 sm:h-12 rounded-2xl sm:rounded-full bg-gradient-to-r from-[#173B32] to-[#287C70] hover:brightness-110 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#C5A66A]/30"
+                  className="w-full h-11 sm:h-12 rounded-2xl sm:rounded-full bg-gradient-to-r from-[#BA1E04] via-[#CD2306] to-[#EE6C19] hover:brightness-110 text-white font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#FBF774]/30"
                 >
                   <span>Search</span>
                   <span className="text-base font-bold">➔</span>
