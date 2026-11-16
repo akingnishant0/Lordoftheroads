@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+export const dynamic = "force-dynamic";
+
+import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -108,7 +110,7 @@ const ROLE_OPTIONS: RoleOption[] = [
   },
 ];
 
-export default function RegisterPage() {
+function RegisterPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialCategory = (searchParams?.get("category") as AccountCategory) || "CUSTOMER";
@@ -625,5 +627,14 @@ export default function RegisterPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-8 text-[#173B32]">Loading...</div>}>
+      <RegisterPageContent />
+    </Suspense>
   );
 }

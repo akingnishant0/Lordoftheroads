@@ -3,8 +3,12 @@ import { ServiceType, PaymentStatus } from "@prisma/client";
 
 export interface BookingTraveller {
   fullName: string;
-  age: number;
-  gender: string;
+  age?: number;
+  gender?: string;
+  phone?: string;
+  email?: string;
+  idType?: string;
+  idNumber?: string;
   idProofType?: string;
   idProofNumber?: string;
 }
@@ -43,12 +47,19 @@ export interface BookingRecord {
   travelDateEnd?: string;
   paxAdults: number;
   paxChildren: number;
+  adults?: number;
+  children?: number;
+  budget?: number;
+  tax?: number;
+  gstAmount?: number;
+  netPayable?: number;
   rooms: number;
   selectedOptionTitle: string;
   selectedOptionTier: string;
   baseAmount: number;
   taxAmount: number;
   totalAmount: number;
+  cancellationSummary?: string;
   paidAmount: number;
   paymentStatus: "CONFIRMED" | "PENDING" | "CANCELLED" | "REFUNDED";
   paymentMethod: string;

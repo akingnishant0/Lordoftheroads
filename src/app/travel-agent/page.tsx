@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+export const dynamic = "force-dynamic";
+
+import React, { Suspense, useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CustomerHeader } from "@/components/customer/CustomerHeader";
@@ -15,7 +17,7 @@ interface ChatMessage {
   timestamp: string;
 }
 
-export default function AiTravelAgentWorkspace() {
+function AiTravelAgentWorkspaceContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get("prompt");
@@ -686,5 +688,14 @@ Please confirm the itinerary and share the best booking quote!`;
 
       <CustomerFooter />
     </div>
+  );
+}
+
+
+export default function AiTravelAgentWorkspace() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-8 text-[#173B32]">Loading...</div>}>
+      <AiTravelAgentWorkspaceContent />
+    </Suspense>
   );
 }

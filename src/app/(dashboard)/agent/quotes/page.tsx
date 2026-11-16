@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+export const dynamic = "force-dynamic";
+
+import React, { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function AgentQuotesPage() {
+function AgentQuotesPageContent() {
   const searchParams = useSearchParams();
   const initialClient = searchParams.get("client") || "Vikram Malhotra";
   const initialDest = searchParams.get("dest") || "Kashmir Valley 6D/5N";
@@ -142,5 +144,14 @@ export default function AgentQuotesPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function AgentQuotesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center p-8 text-[#173B32]">Loading...</div>}>
+      <AgentQuotesPageContent />
+    </Suspense>
   );
 }

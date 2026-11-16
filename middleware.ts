@@ -1,23 +1,31 @@
 import { auth } from "@/lib/auth";
-import { NextResponse } from "next/server";
 import { getDashboardPath } from "@/lib/utils";
+import { NextResponse } from "next/server";
 
-/**
- * Role-based route protection middleware using NextAuth v5 auth wrapper.
- */
 export default auth((req) => {
   const { pathname } = req.nextUrl;
-  const session = req.auth;
-  const user = session?.user;
+  const user = req.auth?.user;
 
-  // If not authenticated, redirect to login page with callbackUrl
-  if (!user) {
+  // Public paths: /login, /register, /, /api/auth, /api/public, /destinations, /hotels, /buses, /cabs
+  // If not logged in and accessing protected dashboard routes, redirect to /login
+  const isDashboardRoute =
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/office") ||
+    pathname.startsWith("/agent") ||
+    pathname.startsWith("/supplier") ||
+    pathname.startsWith("/customer");
+
+  if (isDashboardRoute && !user) {
     const loginUrl = new URL("/login", req.nextUrl.origin);
     loginUrl.searchParams.set("callbackUrl", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  const role = user.role;
+  if (!user) {
+    return NextResponse.next();
+  }
+
+  const role = String(user.role || "");
 
   // /admin/* -> only SUPER_ADMIN
   if (pathname.startsWith("/admin")) {
@@ -37,7 +45,8 @@ export default auth((req) => {
 
   // /agent/* -> SUPER_ADMIN or OFFICE_ADMIN or AGENT or CALLING_STAFF
   if (pathname.startsWith("/agent")) {
-    if (role !== "SUPER_ADMIN" && role !== "OFFICE_ADMIN" && role !== "AGENT" && role !== "CALLING_STAFF") {
+    const isAllowed = ["SUPER_ADMIN", "OFFICE_ADMIN", "AGENT", "CALLING_STAFF"].includes(role);
+    if (!isAllowed) {
       const redirectUrl = new URL(getDashboardPath(role), req.nextUrl.origin);
       return NextResponse.redirect(redirectUrl);
     }

@@ -1,3 +1,7 @@
+export type DestinationItem = Destination;
+export type HotelOption = HotelProperty;
+export type VillaOption = VillaProperty;
+export type TourOption = TourExperience;
 export interface Destination {
   id: string;
   slug: string;

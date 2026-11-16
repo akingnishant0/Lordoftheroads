@@ -49,13 +49,13 @@ export default function AdminPropertiesPage() {
         setHotels((prev) =>
           prev.map((h) =>
             h.id === editingItem.id
-              ? { ...h, name, city: location, type: propertyType, pricePerNight: Number(pricePerNight) }
+              ? { ...h, name, city: location, type: propertyType as any, pricePerNight: Number(pricePerNight) }
               : h
           )
         );
         showToast(`✓ Updated hotel "${name}" successfully!`);
       } else {
-        const newHotel: HotelOption = {
+        const newHotel: any = {
           id: `hotel-${Date.now()}`,
           name,
           city: location,
@@ -65,7 +65,7 @@ export default function AdminPropertiesPage() {
           pricePerNight: Number(pricePerNight),
           imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
           amenities: ["Free WiFi", "Swimming Pool", "Spa & Wellness", "Mountain View"],
-          type: propertyType,
+          type: propertyType as any,
           availableRooms: 6,
         };
         setHotels([newHotel, ...hotels]);
@@ -82,7 +82,7 @@ export default function AdminPropertiesPage() {
         );
         showToast(`✓ Updated villa "${name}" successfully!`);
       } else {
-        const newVilla: VillaOption = {
+        const newVilla: any = {
           id: `villa-${Date.now()}`,
           name,
           location,

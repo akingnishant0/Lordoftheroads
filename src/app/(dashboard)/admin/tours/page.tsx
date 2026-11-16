@@ -44,13 +44,13 @@ export default function AdminToursPage() {
       setTours((prev) =>
         prev.map((item) =>
           item.id === editingTour.id
-            ? { ...item, title, location, duration, category, price: Number(price) }
+            ? { ...item, title, location, duration, category: category as any, price: Number(price) }
             : item
         )
       );
       showToast(`✓ Updated experience "${title}"!`);
     } else {
-      const newTour: TourOption = {
+      const newTour: any = {
         id: `tour-${Date.now()}`,
         title,
         location,

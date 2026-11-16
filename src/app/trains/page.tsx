@@ -16,7 +16,7 @@ export default function TrainsPage() {
   const handleBookClass = (train: TrainOption, clsCode: string) => {
     const selectedCls = train.classes.find((c) => c.code === clsCode);
     const price = selectedCls ? selectedCls.price : 1850;
-    router.push(`/checkout?item=${encodeURIComponent(train.name + " (" + train.trainNumber + ") - Class " + clsCode)}&price=${price}&travellers=1`);
+    router.push(`/checkout?item=${encodeURIComponent((train.trainName || train.trainNumber) + " (" + train.trainNumber + ") - Class " + clsCode)}&price=${price}&travellers=1`);
   };
 
   return (
