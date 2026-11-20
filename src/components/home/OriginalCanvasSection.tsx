@@ -130,10 +130,10 @@ export function OriginalCanvasSection() {
             {ORIGINAL_PERSONAS.map((item) => {
               const isSelected = activePersona === item.id;
               return (
-                <button
+                <Link
                   key={item.id}
-                  type="button"
-                  onClick={() => setActivePersona(item.id)}
+                  href={item.link}
+                  onMouseEnter={() => setActivePersona(item.id)}
                   className={`p-3 rounded-2xl transition-all duration-200 flex flex-col items-center gap-2.5 group cursor-pointer border ${
                     isSelected
                       ? "border-[#BA1E04] bg-[#FFF7ED] shadow-md -translate-y-1 ring-1 ring-[#BA1E04]/30"
@@ -161,7 +161,7 @@ export function OriginalCanvasSection() {
                       {item.badge}
                     </span>
                   </div>
-                </button>
+                </Link>
               );
             })}
           </div>
