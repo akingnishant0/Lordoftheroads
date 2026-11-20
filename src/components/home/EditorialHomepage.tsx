@@ -1,6 +1,7 @@
 "use client";
 
 import NationwideEcosystemSection from "./NationwideEcosystemSection";
+import { OriginalCanvasSection } from "./OriginalCanvasSection";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -516,6 +517,9 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
           </div>
         </div>
       </section>
+
+      {/* Original Heritage & Canvas Section from Original Design */}
+      <OriginalCanvasSection />
 
       {/* 2. AIRBNB-STYLE CATEGORY BAR & MAP TOGGLE */}
       <section className="py-3.5 border-b border-[#E7E6E0] bg-white sticky top-18 z-30 shadow-xs">

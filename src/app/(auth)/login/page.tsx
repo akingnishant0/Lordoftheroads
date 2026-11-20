@@ -17,9 +17,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const getTxt = (key: string, enText: string, hiText: string) => {
-    const val = t(key);
-    if (val && val !== key) return val;
-    return language === "hi" ? hiText : enText;
+    return enText;
   };
 
   const [selectedDemo, setSelectedDemo] = useState("");
@@ -27,7 +25,7 @@ export default function LoginPage() {
   const DEMO_ACCOUNTS = [
     {
       role: "Super Admin",
-      hindi: "सुपर एडमिन",
+      subtitle: "Platform Administration",
       icon: "🛡️",
       email: "admin@lordoftheroad.in",
       pass: "Admin@123",
@@ -36,7 +34,7 @@ export default function LoginPage() {
     },
     {
       role: "Office Admin",
-      hindi: "ऑफिस एडमिन",
+      subtitle: "Branch & Team Operations",
       icon: "🏢",
       email: "office@lordoftheroad.in",
       pass: "Office@123",
@@ -45,7 +43,7 @@ export default function LoginPage() {
     },
     {
       role: "Travel Agent",
-      hindi: "ट्रैवल एजेंट",
+      subtitle: "B2B Travel Consultant",
       icon: "💼",
       email: "agent@lordoftheroad.in",
       pass: "Agent@123",
@@ -54,7 +52,7 @@ export default function LoginPage() {
     },
     {
       role: "Calling Staff",
-      hindi: "कॉलिंग स्टाफ",
+      subtitle: "Inbound Lead Dialer",
       icon: "📞",
       email: "caller@lordoftheroad.in",
       pass: "Caller@123",
@@ -63,7 +61,7 @@ export default function LoginPage() {
     },
     {
       role: "Hotel Partner",
-      hindi: "होटल / स्टे पार्टनर",
+      subtitle: "Stays & Homestay Supplier",
       icon: "🏨",
       email: "hotel@lordoftheroad.in",
       pass: "Hotel@123",
@@ -72,7 +70,7 @@ export default function LoginPage() {
     },
     {
       role: "Bus Operator",
-      hindi: "बस ऑपरेटर",
+      subtitle: "Volvo & Intercity Fleet",
       icon: "🚌",
       email: "bus@lordoftheroad.in",
       pass: "Bus@123",
@@ -81,7 +79,7 @@ export default function LoginPage() {
     },
     {
       role: "Cab & Bike Partner",
-      hindi: "कैब / बाइक रेंटल",
+      subtitle: "Car & Motorcycle Rentals",
       icon: "🚕",
       email: "cab@lordoftheroad.in",
       pass: "Cab@123",
@@ -90,7 +88,7 @@ export default function LoginPage() {
     },
     {
       role: "Shop / Dhaba Vendor",
-      hindi: "ढाबा / स्टोर वेंडर",
+      subtitle: "Highway Essentials & Dining",
       icon: "🛍️",
       email: "shop@lordoftheroad.in",
       pass: "Shop@123",
@@ -99,7 +97,7 @@ export default function LoginPage() {
     },
     {
       role: "Customer",
-      hindi: "कस्टमर यात्री",
+      subtitle: "Individual Traveler",
       icon: "🧳",
       email: "customer@lordoftheroad.in",
       pass: "Customer@123",
@@ -250,10 +248,10 @@ export default function LoginPage() {
             <div>
               <p className="text-[11px] font-bold text-[#1F0605] uppercase tracking-wider flex items-center gap-1.5">
                 <span>⚡</span>
-                <span>त्वरित टेस्ट खाते (Quick Demo Test Accounts — 9 Roles)</span>
+                <span>Quick Demo Test Accounts (9 Roles)</span>
               </p>
               <p className="text-[10px] text-[#737B76]">
-                किसी भी कार्ड पर क्लिक करें—क्रेडेंशियल्स तुरंत भर जाएंगे:
+                Click any card below to pre-fill credentials for instant role testing:
               </p>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FFF7ED] text-[#BA1E04] border border-[#FED7AA]">
@@ -286,14 +284,14 @@ export default function LoginPage() {
                       {acc.role}
                     </strong>
                     <span className="text-[10px] text-[#EE6C19] font-medium block">
-                      {acc.hindi}
+                      {acc.subtitle}
                     </span>
                     <span className="text-[10px] text-[#737B76] font-mono block truncate mt-0.5">
                       {acc.email}
                     </span>
                   </div>
                   <div className="mt-1.5 pt-1 border-t border-[#E7E6E0]/70 flex items-center justify-between text-[9px] text-[#737B76]">
-                    <span>पासवर्ड: <code className="font-mono text-[#1F0605]">{acc.pass}</code></span>
+                    <span>Password: <code className="font-mono text-[#1F0605]">{acc.pass}</code></span>
                     {isSelected && <span className="text-emerald-600 font-bold">✓ Selected</span>}
                   </div>
                 </button>
@@ -303,14 +301,12 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-6 text-center text-xs text-[#737B76]">
-          <span>
-            {getTxt("auth.noAccount", "Don't have an account?", "खाता नहीं है?")}{" "}
-          </span>
+          <span>Don't have an account? </span>
           <Link
             href="/register"
             className="font-bold text-[#BA1E04] hover:text-[#EE6C19] transition underline"
           >
-            {getTxt("auth.registerLink", "Register here", "यहाँ पंजीकरण करें")}
+            Register here
           </Link>
         </div>
       </div>
