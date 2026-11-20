@@ -74,6 +74,15 @@ export function CustomerHeader() {
     { name: "Visa Guidance", href: "/visa-help", icon: "🛂" },
   ];
 
+  const explorerServices = [
+    { name: "Archaeological Sites", href: "/archaeological-sites", icon: "🏛️" },
+    { name: "Field Archaeologists", href: "/archaeologist", icon: "🏺" },
+    { name: "Photography Trails", href: "/photography-trails", icon: "📷" },
+    { name: "Treks & High Passes", href: "/treks", icon: "🥾" },
+    { name: "Native Travel Guides", href: "/travel-guides", icon: "🧭" },
+    { name: "Canvas Stories & Blog", href: "/stories", icon: "📜" },
+  ];
+
   const userRole = (session?.user as { role?: string })?.role;
 
   return (
@@ -171,26 +180,95 @@ export function CustomerHeader() {
               </button>
 
               {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 w-80 bg-white border border-[#E7E6E0] rounded-xl shadow-xl p-3 grid grid-cols-1 gap-1 z-50 animate-fadeIn">
-                  <div className="text-[10px] uppercase font-bold text-[#737B76] px-3 py-1 tracking-wider border-b border-[#E7E6E0] mb-1">
-                    Book Transport & Stays
+                <div className="absolute top-full left-0 w-[520px] bg-white border border-[#E7E6E0] rounded-2xl shadow-2xl p-4 grid grid-cols-2 gap-4 z-50 animate-fadeIn">
+                  <div>
+                    <div className="text-[10px] uppercase font-bold text-[#BA1E04] px-3 py-1 tracking-wider border-b border-[#E7E6E0] mb-2">
+                      Book Transport & Stays
+                    </div>
+                    <div className="space-y-0.5">
+                      {navServices.map((srv) => (
+                        <Link
+                          key={srv.href}
+                          href={srv.href}
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#242A28] hover:bg-[#FAF8F4] hover:text-[#BA1E04] transition group"
+                        >
+                          <span className="text-sm p-1 rounded-md bg-[#FAF8F4] group-hover:bg-[#EDE5D8]/60 transition">
+                            {srv.icon}
+                          </span>
+                          <span>{srv.name}</span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                  {navServices.map((srv) => (
-                    <Link
-                      key={srv.href}
-                      href={srv.href}
-                      onClick={() => setServicesDropdownOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#242A28] hover:bg-[#FAF8F4] hover:text-[#173D32] transition group"
-                    >
-                      <span className="text-base p-1.5 rounded-md bg-[#FAF8F4] group-hover:bg-[#EDE5D8]/60 transition">
-                        {srv.icon}
-                      </span>
-                      <span>{srv.name}</span>
-                    </Link>
-                  ))}
+
+                  <div className="border-l border-[#E7E6E0] pl-4">
+                    <div className="text-[10px] uppercase font-bold text-[#EE6C19] px-3 py-1 tracking-wider border-b border-[#E7E6E0] mb-2">
+                      Explorers & Canvas of India
+                    </div>
+                    <div className="space-y-0.5">
+                      {explorerServices.map((exp) => (
+                        <Link
+                          key={exp.href}
+                          href={exp.href}
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-[#1F0605] hover:bg-[#FFF7ED] hover:text-[#BA1E04] transition group"
+                        >
+                          <span className="text-sm p-1 rounded-md bg-[#FFF7ED] group-hover:bg-[#FED7AA]/60 transition">
+                            {exp.icon}
+                          </span>
+                          <span>{exp.name}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
+
+            <Link
+              href="/archaeological-sites"
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === "/archaeological-sites" || pathname === "/archaeologist"
+                  ? "text-[#BA1E04] font-semibold bg-[#FFF7ED]"
+                  : "text-[#242A28] hover:text-[#BA1E04]"
+              }`}
+            >
+              Archaeology
+            </Link>
+
+            <Link
+              href="/photography-trails"
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === "/photography-trails"
+                  ? "text-[#BA1E04] font-semibold bg-[#FFF7ED]"
+                  : "text-[#242A28] hover:text-[#BA1E04]"
+              }`}
+            >
+              Photo Trails
+            </Link>
+
+            <Link
+              href="/treks"
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === "/treks"
+                  ? "text-[#BA1E04] font-semibold bg-[#FFF7ED]"
+                  : "text-[#242A28] hover:text-[#BA1E04]"
+              }`}
+            >
+              Treks
+            </Link>
+
+            <Link
+              href="/stories"
+              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                pathname === "/stories" || pathname === "/blog"
+                  ? "text-[#BA1E04] font-semibold bg-[#FFF7ED]"
+                  : "text-[#242A28] hover:text-[#BA1E04]"
+              }`}
+            >
+              Stories
+            </Link>
 
             <Link
               href="/holiday-packages"
@@ -200,7 +278,7 @@ export function CustomerHeader() {
                   : "text-[#242A28] hover:text-[#173D32]"
               }`}
             >
-              Holiday Packages
+              Packages
             </Link>
 
             <Link
@@ -401,6 +479,48 @@ export function CustomerHeader() {
               className="p-2.5 rounded-lg bg-white border border-[#E7E6E0] text-sm font-medium text-[#242A28]"
             >
               🚕 Cabs
+            </Link>
+            <Link
+              href="/archaeological-sites"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] text-sm font-bold text-[#BA1E04]"
+            >
+              🏛️ Archaeology
+            </Link>
+            <Link
+              href="/archaeologist"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] text-sm font-bold text-[#BA1E04]"
+            >
+              🏺 Archaeologists
+            </Link>
+            <Link
+              href="/photography-trails"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] text-sm font-bold text-[#BA1E04]"
+            >
+              📷 Photo Trails
+            </Link>
+            <Link
+              href="/treks"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] text-sm font-bold text-[#BA1E04]"
+            >
+              🥾 Treks
+            </Link>
+            <Link
+              href="/travel-guides"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] text-sm font-bold text-[#BA1E04]"
+            >
+              🧭 Travel Guides
+            </Link>
+            <Link
+              href="/stories"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] text-sm font-bold text-[#BA1E04]"
+            >
+              📜 Stories & Blog
             </Link>
           </div>
 

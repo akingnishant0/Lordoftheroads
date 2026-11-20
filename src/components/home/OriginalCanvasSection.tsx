@@ -19,8 +19,8 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     name: "Archaeologist",
     category: "Heritage & History",
     icon: "/images/icon1.png",
-    description: "Study ancient monuments, rock edicts, and civilizational wonders across Bharat.",
-    link: "/destinations",
+    description: "Study ancient monuments, rock edicts, and civilizational wonders across Bharat with field scholars.",
+    link: "/archaeologist",
     badge: "Heritage",
   },
   {
@@ -28,8 +28,8 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     name: "Photographer",
     category: "Visual Expeditions",
     icon: "/images/icon2.png",
-    description: "Capture golden-hour Himalayan ridges, royal forts, and cultural festivals.",
-    link: "/destinations",
+    description: "Capture golden-hour Himalayan ridges, royal forts, and cultural festivals with photo fixers.",
+    link: "/photography-trails",
     badge: "Scenic Spots",
   },
   {
@@ -38,7 +38,7 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     category: "Road & Multi-Modal",
     icon: "/images/icon3.png",
     description: "Thousands of verified routes to easily get you from A to B across any Indian city.",
-    link: "/holiday-packages",
+    link: "/destinations",
     badge: "Journeys",
   },
   {
@@ -56,7 +56,7 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     category: "Wilderness",
     icon: "/images/icon5.png",
     description: "High-altitude passes, alpine meadows, lake basecamps, and offbeat trails.",
-    link: "/holiday-packages",
+    link: "/treks",
     badge: "Adventure",
   },
   {
@@ -65,7 +65,7 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     category: "Native Curators",
     icon: "/images/icon6.png",
     description: "Connect with certified local historians, mountain guides, and regional storytellers.",
-    link: "/support",
+    link: "/travel-guides",
     badge: "Certified Experts",
   },
   {
@@ -74,7 +74,7 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     category: "Historical Landmarks",
     icon: "/images/icon8.png",
     description: "Unearth Harappan ruins, UNESCO cave complexes, and temple architecture.",
-    link: "/destinations",
+    link: "/archaeological-sites",
     badge: "Ancient Sites",
   },
   {
@@ -83,7 +83,7 @@ const ORIGINAL_PERSONAS: PersonaItem[] = [
     category: "Regional Chronicles",
     icon: "/images/icon7.png",
     description: "In-depth regional folklore, culinary traditions, and travel route dispatches.",
-    link: "#canvas-stories",
+    link: "/stories",
     badge: "Stories",
   },
 ];
@@ -206,7 +206,10 @@ export function OriginalCanvasSection() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Story 1: Harsil Mini Switzerland */}
-            <div className="bg-white rounded-3xl border border-[#E7E6E0] overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between">
+            <Link
+              href="/stories"
+              className="bg-white rounded-3xl border border-[#E7E6E0] overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between"
+            >
               <div>
                 <div className="relative h-56 overflow-hidden bg-black">
                   <img
@@ -231,10 +234,13 @@ export function OriginalCanvasSection() {
                 <span>Read Full Chronicle</span>
                 <span className="group-hover:translate-x-1 transition-transform">➔</span>
               </div>
-            </div>
+            </Link>
 
             {/* Story 2: Holi of Braj */}
-            <div className="bg-white rounded-3xl border border-[#E7E6E0] overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between">
+            <Link
+              href="/stories"
+              className="bg-white rounded-3xl border border-[#E7E6E0] overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between"
+            >
               <div>
                 <div className="relative h-56 overflow-hidden bg-black">
                   <img
@@ -259,10 +265,13 @@ export function OriginalCanvasSection() {
                 <span>Read Full Chronicle</span>
                 <span className="group-hover:translate-x-1 transition-transform">➔</span>
               </div>
-            </div>
+            </Link>
 
             {/* Story 3: Archaeology & Ancient Sites */}
-            <div className="bg-white rounded-3xl border border-[#E7E6E0] overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between">
+            <Link
+              href="/stories"
+              className="bg-white rounded-3xl border border-[#E7E6E0] overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col justify-between"
+            >
               <div>
                 <div className="relative h-56 overflow-hidden bg-black">
                   <img
@@ -287,7 +296,7 @@ export function OriginalCanvasSection() {
                 <span>Read Full Chronicle</span>
                 <span className="group-hover:translate-x-1 transition-transform">➔</span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -316,10 +325,10 @@ export function OriginalCanvasSection() {
 
           <div className="flex items-center gap-3 shrink-0">
             <Link
-              href="/travel-agent"
+              href="/archaeologist"
               className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#BA1E04] to-[#EE6C19] text-white text-xs font-bold shadow-md hover:brightness-110 transition"
             >
-              Consult with Explorer Desk ➔
+              Meet Archaeologist & Book Field Walk ➔
             </Link>
           </div>
         </div>
