@@ -1,7 +1,6 @@
 "use client";
 
 import NationwideEcosystemSection from "./NationwideEcosystemSection";
-import { OriginalCanvasSection } from "./OriginalCanvasSection";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -400,8 +399,99 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
 
   return (
     <div className="w-full bg-[#FAF8F4] text-[#242A28]">
-      {/* Original Heritage & Canvas Section from Original Design */}
-      <OriginalCanvasSection />
+      {/* 1. TOP AIRBNB-STYLE SEARCH BAR */}
+      <section className="bg-gradient-to-b from-[#FAF8F5] via-white to-[#FAF8F5] pt-6 pb-4 px-4 sm:px-6 lg:px-8 border-b border-[#E7E6E0]">
+        <div className="max-w-5xl mx-auto space-y-3">
+          {/* Main Floating Rounded Search Bar */}
+          <form
+            id="airbnb-search-bar"
+            onSubmit={handleHeroSearch}
+            className="bg-white rounded-2xl sm:rounded-full border-2 border-[#E7E6E0] hover:border-[#BA1E04]/50 shadow-md hover:shadow-lg transition-all p-2 flex flex-col md:flex-row items-center divide-y md:divide-y-0 md:divide-x divide-[#E7E6E0]"
+          >
+            {/* Destination Input */}
+            <div className="flex-1 px-5 py-2 w-full text-left">
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#BA1E04]">
+                Where To?
+              </label>
+              <input
+                type="text"
+                value={searchDestination}
+                onChange={(e) => setSearchDestination(e.target.value)}
+                placeholder="Manali, Spiti, Goa, Srinagar, Jaipur..."
+                className="w-full bg-transparent text-sm font-semibold text-[#1F0605] placeholder-[#737B76]/60 focus:outline-none"
+              />
+            </div>
+
+            {/* Travel Date */}
+            <div className="flex-1 px-5 py-2 w-full text-left">
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#BA1E04]">
+                Travel Date
+              </label>
+              <input
+                type="date"
+                value={travelDate}
+                onChange={(e) => setTravelDate(e.target.value)}
+                className="w-full bg-transparent text-sm font-semibold text-[#1F0605] focus:outline-none cursor-pointer"
+              />
+            </div>
+
+            {/* Travellers / Guests */}
+            <div className="flex-1 px-5 py-2 w-full text-left">
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-[#BA1E04]">
+                Travellers
+              </label>
+              <select
+                value={travellersCount}
+                onChange={(e) => setTravellersCount(e.target.value)}
+                className="w-full bg-transparent text-sm font-semibold text-[#1F0605] focus:outline-none cursor-pointer"
+              >
+                <option value="1 Traveller">1 Traveller (Solo)</option>
+                <option value="2 Travellers">2 Travellers (Couple)</option>
+                <option value="3-4 Travellers">3–4 Travellers (Family)</option>
+                <option value="5+ Travellers">5+ Travellers (Group)</option>
+              </select>
+            </div>
+
+            {/* Submit Button */}
+            <div className="p-1 w-full md:w-auto">
+              <button
+                type="submit"
+                className="w-full md:w-auto px-6 py-3 rounded-xl sm:rounded-full bg-gradient-to-r from-[#BA1E04] via-[#CD2306] to-[#EE6C19] hover:opacity-95 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer transition transform active:scale-95"
+              >
+                <span>🔍</span>
+                <span>Search Stays</span>
+              </button>
+            </div>
+          </form>
+
+          {/* Quick Destination Chips */}
+          <div className="flex items-center justify-center gap-2 overflow-x-auto scrollbar-none py-1 text-xs">
+            <span className="text-[11px] font-bold text-[#737B76] shrink-0 uppercase tracking-wider">
+              Popular:
+            </span>
+            {[
+              { label: "Dal Lake Front", search: "Srinagar" },
+              { label: "Old Manali Chalets", search: "Manali" },
+              { label: "Jaipur Heritage Havelis", search: "Jaipur" },
+              { label: "Pangong Stargazing Domes", search: "Ladakh" },
+              { label: "Goa Beach Villas", search: "Goa" },
+              { label: "Rishikesh Yoga Sanctuaries", search: "Rishikesh" },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                type="button"
+                onClick={() => {
+                  setSearchDestination(chip.search);
+                  router.push(`/destinations?search=${encodeURIComponent(chip.search)}`);
+                }}
+                className="px-3 py-1 rounded-full bg-white hover:bg-[#FFF7ED] border border-[#E7E6E0] hover:border-[#BA1E04] text-[11px] font-medium text-[#1F0605] transition shrink-0 cursor-pointer shadow-2xs"
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* 2. AIRBNB-STYLE CATEGORY BAR & MAP TOGGLE */}
       <section className="py-3.5 border-b border-[#E7E6E0] bg-white sticky top-18 z-30 shadow-xs">
@@ -417,12 +507,12 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
                   onClick={() => setActiveAirbnbCategory(cat.id)}
                   className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-2xl transition-all cursor-pointer shrink-0 border ${
                     active
-                      ? "border-[#173B32] bg-[#173B32] text-white shadow-xs"
-                      : "border-transparent text-[#737B76] hover:text-[#173B32] hover:bg-[#FAF8F4]"
+                      ? "border-[#BA1E04] bg-[#BA1E04] text-white shadow-xs"
+                      : "border-transparent text-[#737B76] hover:text-[#BA1E04] hover:bg-[#FFF7ED]"
                   }`}
                 >
                   <span className="text-lg">{cat.icon}</span>
-                  <span className="text-[11px] font-semibold whitespace-nowrap">{cat.label}</span>
+                  <span className="text-[11px] font-bold whitespace-nowrap">{cat.label}</span>
                 </button>
               );
             })}
@@ -432,7 +522,7 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
           <button
             type="button"
             onClick={() => setShowMapModal(!showMapModal)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#173B32] text-white text-xs font-bold shadow-lg hover:bg-[#287C70] transition shrink-0 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#1F0605] to-[#BA1E04] text-white text-xs font-bold shadow-md hover:brightness-110 transition shrink-0 cursor-pointer"
           >
             <span>{showMapModal ? "📋 Show List" : "🗺️ Show Map"}</span>
           </button>
@@ -443,7 +533,7 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
       <section id="airbnb-stays-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#173B32]">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1F0605]">
               {activeAirbnbCategory} Across India
             </h2>
             <p className="text-xs text-[#737B76] mt-0.5">
