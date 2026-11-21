@@ -16,10 +16,16 @@ let inMemoryUsers: StoredUser[] = [];
 
 function getStorageFile(): string | null {
   try {
-    // Only access node modules when running in node runtime (not Edge)
-    if (typeof process !== "undefined" && !process.env.NEXT_RUNTIME && typeof (process as any).cwd === "function") {
-      const pathMod = require("path");
-      return pathMod.join(process.cwd(), ".user_registry.json");
+    if (typeof process !== "undefined" && process.env.NEXT_RUNTIME === "edge") {
+      return null;
+    }
+    if (typeof window === "undefined" && typeof process !== "undefined") {
+      const modName = "path";
+      const pathMod = require(modName);
+      const cwdFn = process["cwd"];
+      if (typeof cwdFn === "function") {
+        return pathMod.join(cwdFn.call(process), ".user_registry.json");
+      }
     }
   } catch {}
   return null;
@@ -29,7 +35,8 @@ export function getRegisteredUsers(): StoredUser[] {
   try {
     const file = getStorageFile();
     if (file) {
-      const fsMod = require("fs");
+      const fsModName = "fs";
+      const fsMod = require(fsModName);
       if (fsMod.existsSync(file)) {
         const data = fsMod.readFileSync(file, "utf8");
         return JSON.parse(data);
@@ -48,7 +55,8 @@ export function saveRegisteredUser(user: StoredUser): void {
 
     const file = getStorageFile();
     if (file) {
-      const fsMod = require("fs");
+      const fsModName = "fs";
+      const fsMod = require(fsModName);
       fsMod.writeFileSync(file, JSON.stringify(inMemoryUsers, null, 2), "utf8");
     }
   } catch (e) {

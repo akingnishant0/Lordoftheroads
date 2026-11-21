@@ -462,12 +462,13 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
       {/* 1. EXPLORER ICONS STRIP (Positioned right between Menu and Search) */}
       <section className="bg-white border-b border-[#E7E6E0] py-3 px-4 sm:px-6 lg:px-8 shadow-2xs">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-3 text-center">
+          {/* Horizontal Scroller on Mobile, 8-Column Grid on Desktop */}
+          <div className="flex sm:grid sm:grid-cols-8 gap-3 sm:gap-2 overflow-x-auto sm:overflow-visible scrollbar-none py-1">
             {explorerPersonas.map((item) => (
               <Link
                 key={item.id}
                 href={item.link}
-                className="p-2 sm:p-2.5 rounded-2xl transition-all duration-200 flex flex-col items-center gap-1.5 group cursor-pointer border border-transparent hover:border-[#BA1E04]/30 hover:bg-[#FFF7ED] hover:shadow-xs"
+                className="p-2 sm:p-2.5 rounded-2xl transition-all duration-200 flex flex-col items-center gap-1.5 group cursor-pointer border border-transparent hover:border-[#BA1E04]/30 hover:bg-[#FFF7ED] hover:shadow-xs shrink-0 w-20 sm:w-auto text-center"
               >
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full p-2 bg-[#FAF8F5] border border-[#E7E6E0] group-hover:border-[#BA1E04] group-hover:scale-105 group-hover:bg-white transition-all duration-200 flex items-center justify-center shadow-2xs">
                   <img
@@ -477,10 +478,10 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
                   />
                 </div>
                 <div>
-                  <span className="block text-xs font-bold text-[#1F0605] group-hover:text-[#BA1E04] transition leading-tight">
+                  <span className="block text-xs font-bold text-[#1F0605] group-hover:text-[#BA1E04] transition leading-tight whitespace-nowrap sm:whitespace-normal">
                     {item.name}
                   </span>
-                  <span className="text-[9px] text-[#737B76] font-medium block mt-0.5">
+                  <span className="text-[9px] text-[#737B76] font-medium block mt-0.5 whitespace-nowrap">
                     {item.badge}
                   </span>
                 </div>
