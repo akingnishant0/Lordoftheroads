@@ -80,14 +80,14 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
       id: "photographer",
       name: "Photographer",
       icon: "/images/icon2.png",
-      link: "/photography-trails",
+      link: "/photographer",
       badge: "Scenic Spots",
     },
     {
       id: "travelers",
       name: "Travelers",
       icon: "/images/icon3.png",
-      link: "/destinations",
+      link: "/travelers",
       badge: "Journeys",
     },
     {
@@ -468,6 +468,7 @@ export function EditorialHomepage({ onOpenAiAgent, onOpenBookingModal }: Editori
               <Link
                 key={item.id}
                 href={item.link}
+                onClick={() => router.push(item.link)}
                 className="p-2 sm:p-2.5 rounded-2xl transition-all duration-200 flex flex-col items-center gap-1.5 group cursor-pointer border border-transparent hover:border-[#BA1E04]/30 hover:bg-[#FFF7ED] hover:shadow-xs shrink-0 w-20 sm:w-auto text-center"
               >
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full p-2 bg-[#FAF8F5] border border-[#E7E6E0] group-hover:border-[#BA1E04] group-hover:scale-105 group-hover:bg-white transition-all duration-200 flex items-center justify-center shadow-2xs">
